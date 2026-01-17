@@ -24,7 +24,7 @@ export default function MenuComponent() {
             setUserData(data_);
 
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error fetching data:', error, loading);
         } finally {
             setLoading(false);
         }
