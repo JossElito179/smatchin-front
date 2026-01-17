@@ -81,7 +81,7 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
       setUser(response.data);
 
       console.log(response.data);
-      console.log(canHandle);
+      console.log(canHandle, load, onDelete);
 
       if (response.data?.role == false) {
         setCanRealHandle(canHandle);
@@ -567,7 +567,7 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
                     <div>
                       <h4 className="text-lg font-semibold text-white mb-4">Administrative Documents</h4>
                       <div className="space-y-3">
-                        <div className="p-4 bg-gradient-to-r from-gray-800 to-gray-900 rounded-xl border border-gray-700">
+                        <div className="p-4 bg-linear-to-r from-gray-800 to-gray-900 rounded-xl border border-gray-700">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
                               <div className="w-10 h-10 rounded-full bg-linear-to-br from-blue-900/30 to-blue-900/10 border border-blue-700/30 flex items-center justify-center">
@@ -593,7 +593,7 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
                           </div>
                         </div>
 
-                        <div className="p-4 bg-gradient-to-r from-gray-800 to-gray-900 rounded-xl border border-gray-700">
+                        <div className="p-4 bg-linear-to-r from-gray-800 to-gray-900 rounded-xl border border-gray-700">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
                               <div className="w-10 h-10 rounded-full bg-linear-to-br from-green-900/30 to-green-900/10 border border-green-700/30 flex items-center justify-center">

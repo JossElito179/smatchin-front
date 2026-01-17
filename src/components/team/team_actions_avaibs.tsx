@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react';
+import React, { useState } from 'react';
 import {
   IconButton,
   Menu,
@@ -9,14 +9,12 @@ import {
   DialogActions,
   Button,
   Typography,
-  Divider,
   Alert,
   CircularProgress,
 } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import PeopleIcon from '@mui/icons-material/People';
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import type { itemTeam } from '../../utils/entity';
 import { useNavigate } from 'react-router-dom';
@@ -79,7 +77,7 @@ const TeamActionsAvaibs: React.FC<TeamActionsProps> = ({
           alert('Data deleted with success')
         }
       } catch (error) {
-        console.error('Error when deleting the teams', error)
+        console.error('Error when deleting the teams', error, selectedAction)
         alert('Failed to delete the teams, please try again')       
       }
     }

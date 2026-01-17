@@ -32,7 +32,7 @@ const PlayerAddComponent = ({ id_teams, name }: { id_teams: string | undefined; 
             const data_ = response.data;
 
             setPositionData(data_);
-            console.log('Fetched position data:', data_);
+            console.log('Fetched position data:', data_, load);
 
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -98,6 +98,7 @@ const PlayerAddComponent = ({ id_teams, name }: { id_teams: string | undefined; 
                     },
                 });
                 alert('Player added successfully!');
+                console.log(response)
             } catch (error) {
                 console.error('Error adding team:', error);
                 alert('Failed to add players. Please try again.');

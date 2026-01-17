@@ -28,7 +28,6 @@ interface TeamInfoProps {
   members: TeamMember[];
   season: string;
   owner: string;
-  record: string;
 }
 
 const TeamInfo: React.FC<TeamInfoProps> = ({
@@ -38,8 +37,7 @@ const TeamInfo: React.FC<TeamInfoProps> = ({
   teamPhoto,
   members,
   season,
-  owner,
-  record
+  owner
 }) => {
     const navigate = useNavigate();
 
@@ -81,7 +79,7 @@ const TeamInfo: React.FC<TeamInfoProps> = ({
           
           {/* Logo de l'équipe dans un cercle */}
           <div className="relative">
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-gray-800 to-gray-900 border-4 border-blue-600 overflow-hidden shadow-2xl shadow-blue-900/50">
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-linear-to-br from-gray-800 to-gray-900 border-4 border-blue-600 overflow-hidden shadow-2xl shadow-blue-900/50">
               {teamLogo ? (
                 <img 
                   src={ `${endpointFile}${teamLogo}` } 
@@ -95,7 +93,7 @@ const TeamInfo: React.FC<TeamInfoProps> = ({
               )}
             </div>
             {/* Effet de brillance */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-blue-500/10 to-transparent animate-pulse" />
+            <div className="absolute inset-0 rounded-full bg-linear-to-r from-transparent via-blue-500/10 to-transparent animate-pulse" />
           </div>
         </div>
 
@@ -103,7 +101,7 @@ const TeamInfo: React.FC<TeamInfoProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {/* Photo de groupe principale */}
           <div className="lg:col-span-2">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-linear-to-br from-gray-800 to-gray-900 border border-gray-700">
               {teamPhoto ? (
                 <img 
                   src={`${endpointFile}${teamPhoto}`} 
@@ -111,13 +109,13 @@ const TeamInfo: React.FC<TeamInfoProps> = ({
                   className="w-full h-64 md:h-80 object-cover"
                 />
               ) : (
-                <div className="w-full h-64 md:h-80 flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
+                <div className="w-full h-64 md:h-80 flex items-center justify-center bg-linear-to-br from-gray-800 to-gray-900">
                   <Users size={80} className="text-gray-600" />
                 </div>
               )}
               
               {/* Overlay d'informations */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4">
+              <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/90 via-black/70 to-transparent p-4">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="flex items-center gap-2">
                     <Calendar size={16} className="text-blue-400" />
@@ -142,7 +140,7 @@ const TeamInfo: React.FC<TeamInfoProps> = ({
 
           {/* Section statistiques rapides */}
           <div className="space-y-4">
-            <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-4 border border-gray-700 shadow-xl">
+            <div className="bg-linear-to-br from-gray-800 to-gray-900 rounded-xl p-4 border border-gray-700 shadow-xl">
               <h3 className="text-lg font-semibold mb-3 text-white">Team Stats</h3>
               <div className="space-y-3">
                 <div>
@@ -176,7 +174,7 @@ const TeamInfo: React.FC<TeamInfoProps> = ({
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-4 border border-gray-700 shadow-xl">
+            <div className="bg-linear-to-br from-gray-800 to-gray-900 rounded-xl p-4 border border-gray-700 shadow-xl">
               <h3 className="text-lg font-semibold mb-3 text-white">Positions</h3>
               <div className="flex flex-wrap gap-2">
                 {Array.from(new Set(members.map(m => m.position))).map((position) => (
@@ -193,9 +191,9 @@ const TeamInfo: React.FC<TeamInfoProps> = ({
         </div>
 
         {/* Tableau des joueurs */}
-        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden border border-gray-700 shadow-2xl">
+        <div className="bg-linear-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden border border-gray-700 shadow-2xl">
           {/* En-tête du tableau */}
-          <div className="px-6 py-4 border-b border-gray-700 bg-gradient-to-r from-gray-800 to-gray-900">
+          <div className="px-6 py-4 border-b border-gray-700 bg-linear-to-r from-gray-800 to-gray-900">
             <div className="flex items-center justify-between">
               <h3 className="text-xl font-bold text-white">Team Roster</h3>
               <div className="flex items-center gap-4">
@@ -214,7 +212,7 @@ const TeamInfo: React.FC<TeamInfoProps> = ({
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-gradient-to-r from-gray-800 to-gray-900 border-b border-gray-700">
+                <tr className="bg-linear-to-r from-gray-800 to-gray-900 border-b border-gray-700">
                   <th className="py-4 px-6 text-left">
                     <div className="flex items-center gap-2 text-blue-400 font-semibold">
                       <Users size={16} />
@@ -253,7 +251,7 @@ const TeamInfo: React.FC<TeamInfoProps> = ({
                   >
                     <td className="py-4 px-6">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center border border-gray-600">
+                        <div className="w-8 h-8 rounded-full bg-linear-to-br from-gray-700 to-gray-800 flex items-center justify-center border border-gray-600">
                           <span className="text-xs font-bold text-white">
                             {member.firstName.charAt(0)}{member.name.charAt(0)}
                           </span>
@@ -298,7 +296,7 @@ const TeamInfo: React.FC<TeamInfoProps> = ({
           </div>
 
           {/* Pied du tableau */}
-          <div className="px-6 py-4 bg-gradient-to-r from-gray-800 to-gray-900 border-t border-gray-700">
+          <div className="px-6 py-4 bg-linear-to-r from-gray-800 to-gray-900 border-t border-gray-700">
             <div className="flex items-center justify-between text-sm text-gray-400">
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">

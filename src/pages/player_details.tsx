@@ -55,7 +55,7 @@ export default function PlayerDetails() {
 
             const player = createPlayerObject(data_);
             setPlayer(player);
-            console.log('Fetched player data:', player);
+            console.log('Fetched player data:', player, loading);
 
         } catch (error) {
             console.error('Error fetching data:', error);

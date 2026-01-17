@@ -105,7 +105,7 @@ export default function TeamListComponent() {
     };
 
     const handleUpdate = (teamId: number) => {
-        console.log('Modifier:', teamId);
+        console.log('Modifier:', teamId, load);
     };
 
     const handleRemove = async (teamId: number) => {
@@ -268,7 +268,7 @@ export default function TeamListComponent() {
                     className="md:w-full w-[90%] max-w-6xl overflow-x-auto md:overflow-x-hidden"
                     style={{ maxHeight: '400px', overflowY: 'auto' }}
                 >
-                    <div className="min-w-[700px]">
+                    <div className="min-w-175">
                         <DarkTableContainer>
                             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                                 <TableHead>

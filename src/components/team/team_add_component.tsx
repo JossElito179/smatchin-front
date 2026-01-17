@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Box,
     Container,
@@ -12,7 +12,6 @@ import {
     Card,
     CardContent,
     Grid,
-    TextField,
     IconButton,
 } from '@mui/material';
 import {
@@ -52,7 +51,7 @@ const TeamAddComponent = () => {
             setUserData(data_);
 
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error fetching data:', error, load);
         } finally {
             setLoading(false);
         }
@@ -106,6 +105,7 @@ const TeamAddComponent = () => {
                 setGender(null);
                 setLogoFile(null);
                 alert('Team added successfully!');
+                console.log(response)
             } catch (error) {
                 console.error('Error adding team:', error);
                 alert('Failed to add team. Please try again.');

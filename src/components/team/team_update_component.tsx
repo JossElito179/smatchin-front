@@ -86,9 +86,9 @@ const TeamUpdateComponent = ({ id }: string | any) => {
     }
 
     useEffect(() => {
-        console.log('Chargement initial des données');
         fetchUserData();
         fetchTeamToUpdate();
+        console.log('Chargement initial des données', load, teamToUpdate);
     }, []);
 
 
@@ -134,6 +134,7 @@ const TeamUpdateComponent = ({ id }: string | any) => {
                 setGender(null);
                 setLogoFile(null);
                 alert('Team updated successfully!');
+                console.log(response)
             } catch (error) {
                 console.error('Error updating team:', error);
                 alert('Failed to update team. Please try again.');
