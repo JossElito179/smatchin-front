@@ -74,7 +74,7 @@ export default function TeamDetails() {
         schoolName: team?.name,
         teamLogo: team?.logo,
         teamPhoto: team?.team_img,
-        season: new Date().getFullYear(),
+        season: new Date().getFullYear()+'',
         owner: team?.user.name+' '+team?.user.first_name,
         record: "15-5",
         members: starter?.map((player: any) => ({

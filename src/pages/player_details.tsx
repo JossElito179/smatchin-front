@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import HeaderComponent from "../components/header_component";
 import MenuComponent from "../components/menu_component";
-import TeamInfo from "../components/team/team_details_component";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PlayerDetailsComponent from "../components/players/players_details_component";
@@ -10,8 +9,6 @@ import { endpoint } from "../utils/utils";
 export default function PlayerDetails() {
 
     const { id_player } = useParams<{ id_player: string }>();
-    const { id_team } = useParams<{ id_team: string }>();
-    const { name } = useParams<{ name: string }>();
     const [player, setPlayer] = useState<any>();
     const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
