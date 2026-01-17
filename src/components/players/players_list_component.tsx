@@ -11,25 +11,18 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { AiOutlineDribbble } from "react-icons/ai";
 import { TbListDetails } from "react-icons/tb";
 import {
-    Phone,
     Person,
-    Groups,
-    AccountCircle,
-    MoreVert as MoreVertIcon,
     CalendarMonth,
-    Details,
-    DetailsRounded,
-    DetailsOutlined
 } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import { VscFileMedia, VscHeart } from 'react-icons/vsc';
 import { useEffect, useState } from 'react';
 import type { itemPlayer } from '../../utils/entity';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { endpoint, endpointFile } from '../../utils/utils';
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: '#2a1a2e',
         color: '#f0e0e0',
@@ -50,7 +43,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(() => ({
     backgroundColor: '#1a0f2a',
     '&:nth-of-type(even)': {
         backgroundColor: '#291e3b',
@@ -63,7 +56,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     transition: 'all 0.3s ease',
 }));
 
-const DarkTableContainer = styled(TableContainer)(({ theme }) => ({
+const DarkTableContainer = styled(TableContainer)(() => ({
     borderRadius: '12px',
     overflow: 'hidden',
     background: 'linear-gradient(145deg, #1a0f2a 0%, #291e3b 100%)',
@@ -129,7 +122,7 @@ export default function PlayersListComponent({ id, name }: { id: string | undefi
 
             setCanHandle(canHandle);
             localStorage.setItem('canHandle', canHandle ? 'true' : 'false');
-            console.log(canHandle);
+            console.log(canHandle, load, canHandledResponse);
         } catch (error) {
             console.error(error);
         }
@@ -242,7 +235,7 @@ export default function PlayersListComponent({ id, name }: { id: string | undefi
                     className="md:w-full w-[90%] max-w-6xl overflow-x-auto md:overflow-x-hidden"
                     style={{ maxHeight: '400px', overflowY: 'auto' }}
                 >
-                    <div className="min-w-[700px]">
+                    <div className="min-w-175">
                         <DarkTableContainer>
                             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                                 <TableHead>

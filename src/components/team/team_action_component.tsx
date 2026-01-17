@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react';
+import React, { useState } from 'react';
 import {
   IconButton,
   Menu,
@@ -79,7 +79,7 @@ const TeamActions: React.FC<TeamActionsProps> = ({
           alert('Data deleted with success')
         }
       } catch (error) {
-        console.error('Error when deleting the teams', error)
+        console.error('Error when deleting the teams', error, selectedAction)
         alert('Failed to delete the teams, please try again')       
       }
     }

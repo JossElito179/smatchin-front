@@ -16,7 +16,6 @@ const PlayerUpdateComponent = ({ id_player }: string | any) => {
     const [playerName, setplayerName] = useState('');
     const [firstname, setFirstname] = useState('');
     const [birthdate, setBirthdate] = useState('');
-    const [positions, setpositions] = useState('');
     const [isStarter, setIsStarter] = useState(false);
     const [id_team, setId_team] = useState(false);
     const [positionData, setPositionData] = useState<any>(null);
@@ -37,7 +36,7 @@ const PlayerUpdateComponent = ({ id_player }: string | any) => {
             console.log('Fetched position data:', data_);
 
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error fetching data:', error,player, load);
         } finally {
             setLoading(false);
         }
@@ -126,6 +125,7 @@ const PlayerUpdateComponent = ({ id_player }: string | any) => {
                     },
                 });
                 alert('Player update successfully!');
+                console.log(response)
             } catch (error) {
                 console.error('Error adding team:', error);
                 alert('Failed to update players. Please try again.');
