@@ -241,7 +241,11 @@ export default function OwnerListCom() {
       </div>
 
       <div className="w-full flex flex-col items-center justify-center">
-        <div className="w-full max-w-6xl" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+         <div
+              className="md:w-full w-[90%] max-w-6xl overflow-x-auto md:overflow-x-hidden"
+              style={{ maxHeight: '400px', overflowY: 'auto' }}
+          >
+          <div className="min-w-175">
           <DarkTableContainer>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
@@ -357,6 +361,7 @@ export default function OwnerListCom() {
               </TableBody>
             </Table>
           </DarkTableContainer>
+          </div>
         </div>
       </div>
     </div>
