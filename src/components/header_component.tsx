@@ -20,7 +20,7 @@ export default function HeaderComponent({ pageName }: HeaderProps) {
         <div className="heads flex items-center justify-between px-4 py-4 border-b border-gray-700">
 
             {/* Logo */}
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
                 <button className="bg-white rounded-full p-2 px-4 flex items-center justify-center">
                     <img src={Logo} alt="logo" className="w-7 h-7 md:w-8 md:h-8" />
                     <span className="text-gray-900 font-medium align-middle mt-1 hidden md:inline" > Check.mg </span>
@@ -35,7 +35,7 @@ export default function HeaderComponent({ pageName }: HeaderProps) {
             </div>
 
             {/* Logout */}
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
                 <button onClick={logOut} className="bg-gray-800 transition-all hover:scale-105 any-pointer-coarse: text-white rounded-full p-2  md:px-6 md:py-2 flex items-center">
                     <VscDebugDisconnect className="text-lg md:mr-2" />
                     <span className="hidden md:inline">Log out</span>

@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react';
+import React, { useState } from 'react';
 import {
     IconButton,
     Menu,
@@ -14,8 +14,6 @@ import {
     CircularProgress,
 } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import PeopleIcon from '@mui/icons-material/People';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import type { itemOwner } from '../../utils/entity';
@@ -73,7 +71,7 @@ const OwnerActions: React.FC<OwnerActionsProps> = ({
                     alert('Data deleted with success')
                 }
             } catch (error) {
-                console.error('Error when deleting the owners', error)
+                console.error('Error when deleting the owners', error, selectedAction)
                 alert('Failed to delete the owners, please try again')
             }
         }

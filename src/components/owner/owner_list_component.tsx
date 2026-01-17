@@ -5,25 +5,21 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Avatar from '@mui/material/Avatar';
-import { FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { Avatar, FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import {
   Phone,
   Person,
   Groups,
   AccountCircle,
-  MoreVert as MoreVertIcon,
   Email
 } from '@mui/icons-material';
-import IconButton from '@mui/material/IconButton';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import type { itemOwner } from '../../utils/entity';
 import OwnerActions from './owner_action_component';
-import { Link } from 'react-router-dom';
 import { endpoint, endpointFile } from '../../utils/utils';
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#2a1a2e',
     color: '#f0e0e0',
@@ -44,7 +40,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(() => ({
   backgroundColor: '#1a0f2a',
   '&:nth-of-type(even)': {
     backgroundColor: '#291e3b',
@@ -57,7 +53,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   transition: 'all 0.3s ease',
 }));
 
-const DarkTableContainer = styled(TableContainer)(({ theme }) => ({
+const DarkTableContainer = styled(TableContainer)(() => ({
   borderRadius: '12px',
   overflow: 'hidden',
   background: 'linear-gradient(145deg, #1a0f2a 0%, #291e3b 100%)',
@@ -92,20 +88,7 @@ export default function OwnerListCom() {
   const [rows, setRows] = useState<itemOwner[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loadingId, setLoadingId] = useState<number | null>(null);
-  const [isMale, setIsmale] = useState<boolean | null>(null);
   const [genderFilter, setGenderFilter] = useState<string>('all');
-
-  const getIsMaleValue = (): boolean | null => {
-    switch (genderFilter) {
-      case 'male':
-        return true;
-      case 'female':
-        return false;
-      case 'all':
-      default:
-        return null;
-    }
-  };
 
   const handleUpdate = (teamId: number) => {
     console.log('Modifier:', teamId);
@@ -161,7 +144,7 @@ export default function OwnerListCom() {
         is_male: isMaleVals === 'all' ? null : isMaleVals === 'male' ? true : false
       });
 
-      console.log('response',response)
+      console.log('response',response, load)
       const data_ = response.data;
 
       const preRows = data_.map((item: any) =>

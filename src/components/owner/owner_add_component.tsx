@@ -1,30 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     Container,
     Paper,
     Typography,
-    FormControlLabel,
-    Checkbox,
     Button,
     Avatar,
     Stack,
     Card,
     CardContent,
     Grid,
-    TextField,
     IconButton,
 } from '@mui/material';
 import {
-    CloudUpload as CloudUploadIcon,
-    School as SchoolIcon,
     People as PeopleIcon,
     Person as PersonIcon,
-    Female as FemaleIcon,
-    Male as MaleIcon,
     CheckCircle as CheckCircleIcon,
     Edit as EditIcon,
-    SportsBasketballTwoTone,
     Person2,
     Phone,
     Email,
@@ -73,6 +65,7 @@ const OwnerAddComponent = () => {
                 setFirstname('');
                 setPhone_number('');
                 setProfilImg(null);
+                console.log(response);
             } catch (error) {
                 console.error('Error adding owner:', error);
                 alert('Failed to add owner. Please try again.');

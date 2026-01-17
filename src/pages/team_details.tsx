@@ -32,7 +32,7 @@ export default function TeamDetails() {
             const data_ = response.data;
 
             setTeam(data_);
-            console.log('Fetched team data:', data_);
+            console.log('Fetched team data:', data_,loading);
 
         } catch (error) {
             console.error('Error fetching data:', error);

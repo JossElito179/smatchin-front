@@ -9,22 +9,19 @@ import Avatar from '@mui/material/Avatar';
 import { AiOutlineDribbble } from "react-icons/ai";
 import { FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import {
-    Phone,
     Person,
     Groups,
     AccountCircle,
-    MoreVert as MoreVertIcon
 } from '@mui/icons-material';
-import IconButton from '@mui/material/IconButton';
 import { VscFileMedia } from 'react-icons/vsc';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import type { itemTeam } from '../../utils/entity';
 import TeamActions from './team_action_component';
 import TeamActionsAvaibs from './team_actions_avaibs';
 import { endpoint, endpointFile } from '../../utils/utils';
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: '#2a1a2e',
         color: '#f0e0e0',
@@ -45,7 +42,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(() => ({
     backgroundColor: '#1a0f2a',
     '&:nth-of-type(even)': {
         backgroundColor: '#291e3b',
@@ -58,7 +55,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     transition: 'all 0.3s ease',
 }));
 
-const DarkTableContainer = styled(TableContainer)(({ theme }) => ({
+const DarkTableContainer = styled(TableContainer)(() => ({
     borderRadius: '12px',
     overflow: 'hidden',
     background: 'linear-gradient(145deg, #1a0f2a 0%, #291e3b 100%)',
@@ -98,18 +95,6 @@ export default function TeamListComponent() {
     const [user, setUser] = useState<any>(null);
     const [loadingId, setLoadingId] = useState<number | null>(null);
     const [genderFilter, setGenderFilter] = useState<string>('all');
-
-    const getIsMaleValue = (): boolean | null => {
-        switch (genderFilter) {
-            case 'male':
-                return true;
-            case 'female':
-                return false;
-            case 'all':
-            default:
-                return null;
-        }
-    };
 
     const handleViewDetails = (teamId: number) => {
         console.log('Voir détails:', teamId);

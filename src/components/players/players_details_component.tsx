@@ -6,15 +6,10 @@ import {
   Trophy,
   Target,
   Users,
-  MapPin,
   Edit,
   Trash2,
-  Award,
-  TrendingUp,
-  Activity,
   Heart,
   Star,
-  Clock,
   DeleteIcon
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -285,11 +280,11 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
           {/* Colonne gauche - Photo et info basique */}
           <div className="space-y-6">
             {/* Carte photo et nom */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 border border-gray-700 shadow-2xl">
+            <div className="bg-linear-to-br from-gray-800 to-gray-900 rounded-2xl p-6 border border-gray-700 shadow-2xl">
               <div className="flex flex-col items-center">
                 {/* Photo de profil */}
                 <div className="relative mb-6">
-                  <div className="w-32 h-32 rounded-full border-4 border-blue-500 overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800">
+                  <div className="w-32 h-32 rounded-full border-4 border-blue-500 overflow-hidden bg-linear-to-br from-gray-700 to-gray-800">
                     {currentPlayer.profil_img ? (
                       <img
                         src={`${endpointFile}${currentPlayer.profil_img}`}
@@ -306,7 +301,7 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
                   {/* Badge Starter */}
                   {currentPlayer.is_starter && (
                     <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-                      <div className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-yellow-600 to-yellow-700 rounded-full border border-yellow-500 shadow-lg">
+                      <div className="flex items-center gap-1 px-3 py-1 bg-linear-to-r from-yellow-600 to-yellow-700 rounded-full border border-yellow-500 shadow-lg">
                         <Star size={12} className="text-white" />
                         <span className="text-xs font-bold text-white">STARTER</span>
                       </div>
@@ -331,11 +326,11 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
                 {/* Info équipe */}
                 <div
                   onClick={onGoToTeam}
-                  className="cursor-pointer w-full p-4 bg-gradient-to-r from-gray-800 to-gray-900 rounded-xl border border-gray-700 hover:border-blue-500 transition-all group"
+                  className="cursor-pointer w-full p-4 bg-linear-to-r from-gray-800 to-gray-900 rounded-xl border border-gray-700 hover:border-blue-500 transition-all group"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 border border-gray-600 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full bg-linear-to-br from-gray-700 to-gray-800 border border-gray-600 flex items-center justify-center">
                         {currentPlayer.team?.logo ? (
                           <img
                             src={`${endpointFile}${currentPlayer.team.logo}`}
@@ -362,7 +357,7 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
             </div>
 
             {/* Carte informations personnelles */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 border border-gray-700 shadow-2xl">
+            <div className="bg-linear-to-br from-gray-800 to-gray-900 rounded-2xl p-6 border border-gray-700 shadow-2xl">
               <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                 <User size={20} className="text-blue-400" />
                 Personal Information
@@ -415,7 +410,7 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
           {/* Colonne centrale - Onglets de contenu */}
           <div className="lg:col-span-2 space-y-6">
             {/* Navigation par onglets */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl border border-gray-700 shadow-2xl overflow-hidden">
+            <div className="bg-linear-to-br from-gray-800 to-gray-900 rounded-2xl border border-gray-700 shadow-2xl overflow-hidden">
               <div className="flex border-b border-gray-700">
                 <button
                   onClick={() => setActiveTab('info')}
@@ -445,12 +440,12 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
                     <div>
                       <h4 className="text-lg font-semibold text-white mb-4">Position et Rôle</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="p-4 bg-gradient-to-r from-blue-900/20 to-blue-900/10 rounded-xl border border-blue-700/30">
+                        <div className="p-4 bg-linear-to-r from-blue-900/20 to-blue-900/10 rounded-xl border border-blue-700/30">
                           <div className="text-sm text-blue-300 mb-1">Position</div>
                           <div className="text-xl font-bold text-white">{currentPlayer.position?.acronym}</div>
                           <div className="text-gray-300">{currentPlayer.position?.name}</div>
                         </div>
-                        <div className="p-4 bg-gradient-to-r from-green-900/20 to-green-900/10 rounded-xl border border-green-700/30">
+                        <div className="p-4 bg-linear-to-r from-green-900/20 to-green-900/10 rounded-xl border border-green-700/30">
                           <div className="text-sm text-green-300 mb-1">Team Status</div>
                           <div className="text-xl font-bold text-white">
                             {currentPlayer.is_starter ? 'Starter' : 'Substitute'}
@@ -465,10 +460,10 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
                     {/* Section équipe */}
                     <div>
                       <h4 className="text-lg font-semibold text-white mb-4">Current Team</h4>
-                      <div className="p-4 bg-gradient-to-r from-gray-800 to-gray-900 rounded-xl border border-gray-700">
+                      <div className="p-4 bg-linear-to-r from-gray-800 to-gray-900 rounded-xl border border-gray-700">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 border border-gray-600 flex items-center justify-center">
+                            <div className="w-12 h-12 rounded-full bg-linear-to-br from-gray-700 to-gray-800 border border-gray-600 flex items-center justify-center">
                               {currentPlayer.team?.logo ? (
                                 <img
                                   src={`${endpointFile}${currentPlayer.team.logo}`}
@@ -575,7 +570,7 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
                         <div className="p-4 bg-gradient-to-r from-gray-800 to-gray-900 rounded-xl border border-gray-700">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-900/30 to-blue-900/10 border border-blue-700/30 flex items-center justify-center">
+                              <div className="w-10 h-10 rounded-full bg-linear-to-br from-blue-900/30 to-blue-900/10 border border-blue-700/30 flex items-center justify-center">
                                 <Trophy size={20} className="text-blue-400" />
                               </div>
                               <div>
@@ -601,7 +596,7 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
                         <div className="p-4 bg-gradient-to-r from-gray-800 to-gray-900 rounded-xl border border-gray-700">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-900/30 to-green-900/10 border border-green-700/30 flex items-center justify-center">
+                              <div className="w-10 h-10 rounded-full bg-linear-to-br from-green-900/30 to-green-900/10 border border-green-700/30 flex items-center justify-center">
                                 <User size={20} className="text-green-400" />
                               </div>
                               <div>
@@ -631,19 +626,19 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
 
             {/* Section ID et dates */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl border border-gray-700">
+              <div className="p-4 bg-linear-to-br from-gray-800 to-gray-900 rounded-xl border border-gray-700">
                 <div className="text-sm text-gray-400 mb-1">Player ID</div>
                 <div className="text-xl font-bold text-white">
                   #{currentPlayer.id_players.toString().padStart(4, '0')}
                 </div>
               </div>
 
-              <div className="p-4 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl border border-gray-700">
+              <div className="p-4 bg-linear-to-br from-gray-800 to-gray-900 rounded-xl border border-gray-700">
                 <div className="text-sm text-gray-400 mb-1">Team ID</div>
                 <div className="text-xl font-bold text-white">#{currentPlayer.id_teams}</div>
               </div>
 
-              <div className="p-4 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl border border-gray-700">
+              <div className="p-4 bg-linear-to-br from-gray-800 to-gray-900 rounded-xl border border-gray-700">
                 <div className="text-sm text-gray-400 mb-1">Position ID</div>
                 <div className="text-xl font-bold text-white">#{currentPlayer.id_positions}</div>
               </div>

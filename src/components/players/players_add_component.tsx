@@ -18,7 +18,6 @@ const PlayerAddComponent = ({ id_teams, name }: { id_teams: string | undefined; 
     const [playerName, setplayerName] = useState('');
     const [firstname, setFirstname] = useState('');
     const [birthdate, setBirthdate] = useState('');
-    const [positions, setpositions] = useState('');
     const [isStarter, setIsStarter] = useState(false);
     const [positionData, setPositionData] = useState<any>(null);
     const [load, setLoading] = useState(true);

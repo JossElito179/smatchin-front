@@ -1,6 +1,6 @@
 import { Alert, FormControl, Input, InputLabel } from "@mui/material";
 import SpotlightCard from "../bits-components/Spot-light-card";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import Logo from "../assets/530171883_122216480942251755_3185943683385628894_n.jpg";
@@ -9,10 +9,8 @@ import { endpoint } from "../utils/utils";
 export default function LoginComponent() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
 

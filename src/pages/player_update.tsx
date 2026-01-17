@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import HeaderComponent from "../components/header_component";
 import MenuComponent from "../components/menu_component";
-import PlayerAddComponent from "../components/players/players_add_component";
 import PlayerUpdateComponent from "../components/players/players_update_component";
 
 export default function PlayerUpdate() {
