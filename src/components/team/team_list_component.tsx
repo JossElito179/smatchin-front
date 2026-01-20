@@ -78,11 +78,12 @@ function createData(
     id: number,
     name: string,
     logo: string,
+    id_owner: number,
     owner: string,
     is_male: boolean,
     total_members: number
 ) {
-    return { id, name, logo, owner, is_male, total_members };
+    return { id, name, logo, id_owner, owner, is_male, total_members };
 }
 
 
@@ -95,6 +96,7 @@ export default function TeamListComponent() {
     const [user, setUser] = useState<any>(null);
     const [loadingId, setLoadingId] = useState<number | null>(null);
     const [genderFilter, setGenderFilter] = useState<string>('all');
+    const id_user = localStorage.getItem('id_user');
 
     const handleViewDetails = (teamId: number) => {
         console.log('Voir détails:', teamId);
@@ -141,7 +143,7 @@ export default function TeamListComponent() {
         try {
             const response = await axios.post(endpoint + 'teams/all/with-search/user-id', {
                 query: searchTerm || '',
-                id_user:userId
+                id_user: userId
             });
             setCanHandledResponse(response.data);
             console.log(response.data)
@@ -172,6 +174,7 @@ export default function TeamListComponent() {
                     item.id,
                     item.name,
                     item.logo,
+                    item.user.id,
                     item.user.name + ' ' + item.user.first_name,
                     item.is_male,
                     item.players.length
@@ -302,7 +305,10 @@ export default function TeamListComponent() {
                                 </TableHead>
                                 <TableBody>
                                     {rows.map((row, index) => (
-                                        <StyledTableRow key={index} className="group">
+                                        <StyledTableRow
+                                            key={index}
+                                            className={`group ${id_user === row.id_owner+'' ? 'bg-linear-to-r from-amber-950/20 to-amber-950/10 border-l-4 border-l-amber-500' : ''}`}
+                                        >
                                             <StyledTableCell component="th" scope="row">
                                                 <div className="flex">
                                                     <div className="flex items-center gap-3">
@@ -320,15 +326,14 @@ export default function TeamListComponent() {
                                                                             className="w-full h-full object-cover transition-all hover:scale-110 rounded-full"
                                                                         />
                                                                     </a>
-
                                                                 </div>
                                                             ) : (
                                                                 <Avatar
                                                                     sx={{
                                                                         width: 36,
                                                                         height: 36,
-                                                                        bgcolor: 'rgba(255, 140, 0, 0.1)',
-                                                                        border: '1px solid rgba(255, 140, 0, 0.3)',
+                                                                        bgcolor: user?.id === row.id_owner ? 'rgba(255, 140, 0, 0.2)' : 'rgba(255, 140, 0, 0.1)',
+                                                                        border: user?.id === row.id_owner ? '2px solid rgba(255, 140, 0, 0.5)' : '1px solid rgba(255, 140, 0, 0.3)',
                                                                         color: '#ff8c00',
                                                                         cursor: 'pointer',
                                                                         transition: 'all 0.3s',
@@ -339,12 +344,15 @@ export default function TeamListComponent() {
                                                                     }}
                                                                 >
                                                                     <VscFileMedia />
-                                                                </Avatar>)
+                                                                </Avatar>
+                                                            )
                                                         }
                                                     </div>
                                                     <div className="flex items-center gap-3 ml-3">
                                                         <div>
-                                                            <div className="font-semibold text-white">{row.name}</div>
+                                                            <div className={`font-semibold ${user?.id === row.id_owner ? 'text-amber-300' : 'text-white'}`}>
+                                                                {row.name}
+                                                            </div>
                                                             {/* <div className="text-sm text-gray-300">{row.logo}</div> */}
                                                         </div>
                                                     </div>
@@ -353,29 +361,41 @@ export default function TeamListComponent() {
                                             <StyledTableCell align="center">
                                                 {
                                                     row.is_male === true ? (
-                                                        <span className="inline-block px-3 py-1 rounded-full bg-amber-900/30 text-amber-300 text-sm font-medium">
+                                                        <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${user?.id === row.id_owner
+                                                                ? 'bg-amber-800/40 text-amber-200 border border-amber-700/50'
+                                                                : 'bg-amber-900/30 text-amber-300'
+                                                            }`}>
                                                             Male
                                                         </span>
                                                     ) : (
-                                                        <span className="inline-block px-3 py-1 rounded-full bg-pink-900/30 text-pink-300 text-sm font-medium">
+                                                        <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${user?.id === row.id_owner
+                                                                ? 'bg-pink-800/40 text-pink-200 border border-pink-700/50'
+                                                                : 'bg-pink-900/30 text-pink-300'
+                                                            }`}>
                                                             Female
                                                         </span>
                                                     )
                                                 }
                                             </StyledTableCell>
                                             <StyledTableCell align="center">
-                                                <span className="inline-block px-3 py-1 rounded-full bg-purple-900/30 text-purple-300 text-sm font-medium">
+                                                <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${user?.id === row.id_owner
+                                                        ? 'bg-purple-800/40 text-purple-200 border border-purple-700/50'
+                                                        : 'bg-purple-900/30 text-purple-300'
+                                                    }`}>
                                                     {row.total_members}
                                                 </span>
                                             </StyledTableCell>
                                             <StyledTableCell align="center">
-                                                <div className="flex items-center justify-center gap-2 text-gray-300">
+                                                <div className={`flex items-center justify-center gap-2 ${user?.id === row.id_owner ? 'text-amber-300' : 'text-gray-300'
+                                                    }`}>
                                                     {row.owner}
+                                                    {user?.id === row.id_owner && (
+                                                        <span className="ml-1 text-amber-400 text-xs font-semibold">(You)</span>
+                                                    )}
                                                 </div>
                                             </StyledTableCell>
                                             <StyledTableCell align="center">
                                                 {
-
                                                     user?.role == true ? (
                                                         <TeamActions
                                                             team={row}
@@ -385,9 +405,8 @@ export default function TeamListComponent() {
                                                             onRemove={handleRemove}
                                                             loading={loadingId === row.id}
                                                         />
-                                                    ) : user?.role == false &&  Array.isArray(canHandledResponse) &&
+                                                    ) : user?.role == false && Array.isArray(canHandledResponse) &&
                                                         canHandledResponse.some((p: any) => p.id === row.id) ? (
-
                                                         <TeamActions
                                                             team={row}
                                                             onViewDetails={handleViewDetails}
@@ -397,7 +416,6 @@ export default function TeamListComponent() {
                                                             loading={loadingId === row.id}
                                                         />
                                                     ) : (
-
                                                         <TeamActionsAvaibs
                                                             team={row}
                                                             onViewDetails={handleViewDetails}
@@ -408,7 +426,6 @@ export default function TeamListComponent() {
                                                         />
                                                     )
                                                 }
-
                                             </StyledTableCell>
                                         </StyledTableRow>
                                     ))}

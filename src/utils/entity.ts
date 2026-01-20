@@ -13,6 +13,7 @@ export type itemTeam = {
     id: number
     name: string,
     logo: string,
+    id_owner: number,
     owner: string,
     is_male: boolean,
     total_members: number
