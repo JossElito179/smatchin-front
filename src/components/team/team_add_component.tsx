@@ -13,6 +13,7 @@ import {
     CardContent,
     Grid,
     IconButton,
+    Switch,
 } from '@mui/material';
 import {
     CloudUpload as CloudUploadIcon,
@@ -36,6 +37,7 @@ const TeamAddComponent = () => {
     const [logoFile, setLogoFile] = useState<File | null>(null);
     const [groupPhotoFile, setGroupPhotoFile] = useState<File | null>(null);
     const [selectedOwner, setSelectedOwner] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
     const [teamName, setTeamName] = useState('');
     const [load, setLoading] = useState(true);
     const [userData, setUserData] = useState<any>(null);
@@ -44,7 +46,7 @@ const TeamAddComponent = () => {
     async function fetchUserData() {
         try {
             setLoading(true);
-            const response = await axios.get(endpoint+'users/all');
+            const response = await axios.get(endpoint + 'users/all');
 
             const data_ = response.data;
 
@@ -81,6 +83,7 @@ const TeamAddComponent = () => {
                 const formData = new FormData();
                 formData.append('name', teamName);
                 formData.append('id_users', selectedOwner);
+                formData.append('is_admin', isAdmin ? '1' : '0');
                 formData.append('is_male', gender === 'male' ? '1' : '0');
 
                 if (logoFile) {
@@ -94,7 +97,7 @@ const TeamAddComponent = () => {
                 }
 
 
-                const response = await axios.post(endpoint+'teams', formData, {
+                const response = await axios.post(endpoint + 'teams', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
@@ -129,7 +132,7 @@ const TeamAddComponent = () => {
                         }
                     }}
                 >
-                    <ArrowBackIcon  className=" text-purple-700" fontSize="medium" />
+                    <ArrowBackIcon className=" text-purple-700" fontSize="medium" />
                 </IconButton>
             </div>
             <Container maxWidth="lg">
@@ -423,6 +426,25 @@ const TeamAddComponent = () => {
 
 
                                             <Box>
+                                                <Stack direction="row" alignItems="center" spacing={1.5} mb={3}>
+                                                    <Box>
+                                                        <FormControlLabel
+                                                            control={
+                                                                <Switch
+                                                                    size="small"
+                                                                    checked={isAdmin}
+                                                                    onChange={(e) => setIsAdmin(e.target.checked)}
+                                                                    color="primary"
+                                                                />
+                                                            }
+                                                            label={
+                                                                <Typography variant="body2" sx={{ fontSize: '0.9rem' }}>
+                                                                    Is Admin
+                                                                </Typography>
+                                                            }
+                                                        />
+                                                    </Box>
+                                                </Stack>
                                                 <Typography variant="subtitle2" sx={{ color: '#666', fontWeight: 500 }}>
                                                     Gender
                                                 </Typography>

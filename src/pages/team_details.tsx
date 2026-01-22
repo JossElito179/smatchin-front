@@ -5,6 +5,7 @@ import TeamInfo from "../components/team/team_details_component";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { endpoint } from "../utils/utils";
+import LoadingSpinner from "../components/LoadSpinner";
 
 export default function TeamDetails() {
 
@@ -18,7 +19,7 @@ export default function TeamDetails() {
             id: data.id_players,
             name: data.name,
             firstName: data.first_name,
-            age: data.birth_date ? new Date().getFullYear() - new Date(data.birth_date).getFullYear()+ ' YO' : '',
+            age: data.birth_date ? new Date().getFullYear() - new Date(data.birth_date).getFullYear() + ' YO' : '',
             role: data.is_starter ? 'Starter' : 'Bench',
             position: data.position.acronym
         }
@@ -27,12 +28,12 @@ export default function TeamDetails() {
     async function fetchTeam() {
         try {
             setLoading(true);
-            const response = await axios.get(endpoint+'teams/' + id_team);
+            const response = await axios.get(endpoint + 'teams/' + id_team);
 
             const data_ = response.data;
 
             setTeam(data_);
-            console.log('Fetched team data:', data_,loading);
+            console.log('Fetched team data:', data_, loading);
 
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -44,9 +45,9 @@ export default function TeamDetails() {
     async function fetchStarter() {
         try {
             setLoading(true);
-            const response = await axios.post(endpoint+'players/searchPlayer' ,{
+            const response = await axios.post(endpoint + 'players/searchPlayer', {
                 id_teams: id_team,
-            } );
+            });
 
             const data_ = response.data;
 
@@ -74,8 +75,8 @@ export default function TeamDetails() {
         schoolName: team?.name,
         teamLogo: team?.logo,
         teamPhoto: team?.team_img,
-        season: new Date().getFullYear()+'',
-        owner: team?.user.name+' '+team?.user.first_name,
+        season: new Date().getFullYear() + '',
+        owner: team?.user.name + ' ' + team?.user.first_name,
         record: "15-5",
         members: starter?.map((player: any) => ({
             id: player.id,
@@ -86,6 +87,12 @@ export default function TeamDetails() {
             position: player.position
         }))
     };
+
+    if (loading) {
+        return (
+            <LoadingSpinner text="Loading team list..." />
+        )
+    }
 
     return (
         <div className="owner-add-page w-full min-h-screen bg-gray-900 text-white">

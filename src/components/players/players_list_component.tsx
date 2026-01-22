@@ -18,9 +18,10 @@ import IconButton from '@mui/material/IconButton';
 import { VscFileMedia, VscHeart } from 'react-icons/vsc';
 import { useEffect, useState } from 'react';
 import type { itemPlayer } from '../../utils/entity';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { endpoint, endpointFile } from '../../utils/utils';
+import { endpoint } from '../../utils/utils';
+import LoadingSpinner from '../LoadSpinner';
 
 const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
@@ -91,14 +92,29 @@ export default function PlayersListComponent({ id, name }: { id: string | undefi
     const [rows, setRows] = useState<itemPlayer[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
     const userId = localStorage.getItem('id_user');
+    const [user, setUser] = useState<any>(null);
     const [canHandle, setCanHandle] = useState(false);
     const navigate = useNavigate();
     const [canHandledResponse, setCanHandledResponse] = useState([]);
 
+    async function fetchUserRole() {
+        try {
+            setLoading(true);
+            const response = await axios.get(endpoint + 'users/find/' + userId);
+            console.log(response.data);
+            setUser(response.data);
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     async function fetchCanHandle() {
         try {
             const response = await axios.post(
-                endpoint+'teams/all/with-search/user-id',
+                endpoint + 'teams/all/with-search/user-id',
                 { id_user: userId }
             );
 
@@ -134,8 +150,12 @@ export default function PlayersListComponent({ id, name }: { id: string | undefi
     async function fetchData(searchTerm?: string) {
         try {
             setLoading(true);
-            await fetchCanHandle();
-            const response = await axios.post(endpoint+'players/searchPlayer', {
+            await fetchUserRole();
+            setCanHandle(true)
+            if (user?.role == false) {
+                await fetchCanHandle();
+            }
+            const response = await axios.post(endpoint + 'players/searchPlayer', {
                 searchTerm: searchTerm || '',
                 id_teams: id
             });
@@ -183,7 +203,7 @@ export default function PlayersListComponent({ id, name }: { id: string | undefi
     function exportPlayerWithImages(): void {
         const exportData = async () => {
             try {
-                const response = await axios.get(endpoint+`players/export/${id}`, {
+                const response = await axios.get(endpoint + `players/export/${id}`, {
                     responseType: 'blob',
                 });
 
@@ -208,6 +228,13 @@ export default function PlayersListComponent({ id, name }: { id: string | undefi
         };
         exportData();
     }
+
+    if (load) {
+        return (
+            <LoadingSpinner text="Loading player list..." />
+        )
+    }
+
     return (
         <div>
             <div className="retour pt-5 max-w-7xl mx-auto">
@@ -223,7 +250,7 @@ export default function PlayersListComponent({ id, name }: { id: string | undefi
                         }
                     }}
                 >
-                    <ArrowBackIcon  className=" text-purple-700" fontSize="medium" />
+                    <ArrowBackIcon className=" text-purple-700" fontSize="medium" />
                 </IconButton>
             </div>
             <div className="search-container flex items-center w-full justify-center mb-5">
@@ -277,12 +304,12 @@ export default function PlayersListComponent({ id, name }: { id: string | undefi
                                                             row.profil_img ? (
                                                                 <div className='rounded-full w-10 h-10 hover:scale(1.1)'>
                                                                     <a
-                                                                        href={`${endpointFile}${row.profil_img}`}
+                                                                        href={row.profil_img}
                                                                         target="_blank"
                                                                         rel="noopener noreferrer"
                                                                     >
                                                                         <img
-                                                                            src={`${endpointFile}${row.profil_img}`}
+                                                                            src={row.profil_img}
                                                                             alt={`${row.name}`}
                                                                             className="w-full h-full object-cover rounded-full transition-all hover:scale-110"
                                                                         />
@@ -363,7 +390,7 @@ export default function PlayersListComponent({ id, name }: { id: string | undefi
                     </div>
                 </div>
                 {
-                    canHandle ? (
+                    canHandle == true ? (
                         <>
                             <div className="mt-4 p-3 mb-7 flex justify-around">
                                 <button onClick={handleAddplayer} className="px-4 py-2 mr-1.5 bg-purple-900 hover:bg-purple-700 text-white rounded-md">

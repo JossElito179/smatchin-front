@@ -12,10 +12,11 @@ import {
   Star,
   DeleteIcon
 } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
 import axios from 'axios';
-import { endpoint, endpointFile } from '../../utils/utils';
+import { endpoint } from '../../utils/utils';
+import LoadingSpinner from '../LoadSpinner';
 
 interface PlayerDetails {
   id_players: number;
@@ -186,6 +187,12 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
     setShowConfirmation(true);
   }
 
+  if (load) {
+    return (
+      <LoadingSpinner text="Loading player details..." />
+    )
+  }
+
   return (
     <div className="min-h-screen  text-gray-100 p-4 md:p-6 lg:p-8">
       <div className="max-w-6xl mx-auto">
@@ -287,7 +294,7 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
                   <div className="w-32 h-32 rounded-full border-4 border-blue-500 overflow-hidden bg-linear-to-br from-gray-700 to-gray-800">
                     {currentPlayer.profil_img ? (
                       <img
-                        src={`${endpointFile}${currentPlayer.profil_img}`}
+                        src={currentPlayer.profil_img}
                         alt={`${currentPlayer.first_name} ${currentPlayer.name}`}
                         className="w-full h-full object-cover"
                       />
@@ -333,7 +340,7 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
                       <div className="w-10 h-10 rounded-full bg-linear-to-br from-gray-700 to-gray-800 border border-gray-600 flex items-center justify-center">
                         {currentPlayer.team?.logo ? (
                           <img
-                            src={`${endpointFile}${currentPlayer.team.logo}`}
+                            src={currentPlayer.team.logo}
                             alt={currentPlayer.team.name}
                             className="w-full rounded-full h-full object-cover"
                           />
@@ -466,7 +473,7 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
                             <div className="w-12 h-12 rounded-full bg-linear-to-br from-gray-700 to-gray-800 border border-gray-600 flex items-center justify-center">
                               {currentPlayer.team?.logo ? (
                                 <img
-                                  src={`${endpointFile}${currentPlayer.team.logo}`}
+                                  src={currentPlayer.team.logo}
                                   alt={currentPlayer.team.name}
                                   className="w-auto h-auto rounded-full object-cover"
                                 />
@@ -580,11 +587,13 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
                             </div>
                             <div>
                               {currentPlayer.bacc_file ? (
-                                <Link to={`${endpointFile}${currentPlayer.bacc_file}`} >
+                                <a href={currentPlayer.bacc_file}
+                                  target="_blank"
+                                  rel="noopener noreferrer" >
                                   <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors">
                                     Watch the file
                                   </button>
-                                </Link>
+                                </a>
 
                               ) : (
                                 <span className="text-gray-500 text-sm">Not provided</span>
@@ -606,11 +615,13 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
                             </div>
                             <div>
                               {currentPlayer.cin_file ? (
-                                <Link to={`${endpointFile}${currentPlayer.cin_file}`}>
+                                <a href={currentPlayer.cin_file}
+                                  target="_blank"
+                                  rel="noopener noreferrer">
                                   <button className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm transition-colors">
                                     Watch the file
                                   </button>
-                                </Link>
+                                </a>
                               ) : (
                                 <span className="text-gray-500 text-sm">Not provided</span>
                               )}

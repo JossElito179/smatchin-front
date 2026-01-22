@@ -477,7 +477,6 @@ const PlayerAddComponent = ({ id_teams, name }: { id_teams: string | undefined; 
                                                     <input
                                                         type="file"
                                                         hidden
-                                                        accept="image/*"
                                                         onChange={handleBaccUpload}
                                                     />
                                                 </Button>
@@ -567,7 +566,6 @@ const PlayerAddComponent = ({ id_teams, name }: { id_teams: string | undefined; 
                                                     <input
                                                         type="file"
                                                         hidden
-                                                        accept="image/*"
                                                         onChange={handleCinUpload}
                                                     />
                                                 </Button>

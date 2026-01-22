@@ -17,7 +17,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import type { itemOwner } from '../../utils/entity';
 import OwnerActions from './owner_action_component';
-import { endpoint, endpointFile } from '../../utils/utils';
+import { endpoint } from '../../utils/utils';
+import LoadingSpinner from '../LoadSpinner';
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
@@ -135,16 +136,16 @@ export default function OwnerListCom() {
   };
 
 
-  async function fetchData(searchTerm?: string, isMaleVals = 'all' ) {
+  async function fetchData(searchTerm?: string, isMaleVals = 'all') {
     try {
       setLoading(true);
       console.log(isMaleVals === 'all' ? null : isMaleVals === 'male' ? true : false)
-      const response = await axios.post(endpoint+'users/all/with-search', {
+      const response = await axios.post(endpoint + 'users/all/with-search', {
         query: searchTerm || '',
         is_male: isMaleVals === 'all' ? null : isMaleVals === 'male' ? true : false
       });
 
-      console.log('response',response, load)
+      console.log('response', response, load)
       const data_ = response.data;
 
       const preRows = data_.map((item: any) =>
@@ -170,12 +171,19 @@ export default function OwnerListCom() {
   useEffect(() => {
     console.log('Chargement initial des données');
     fetchData('', 'all');
-  }, []); 
+  }, []);
 
   useEffect(() => {
     console.log('Chargement initial des données');
     fetchData(searchTerm, genderFilter);
-  }, [searchTerm, genderFilter]); 
+  }, [searchTerm, genderFilter]);
+
+  if (load) {
+    return (
+      <LoadingSpinner text="Loading owner list..." />
+    )
+  }
+
 
   return (
 
@@ -241,126 +249,126 @@ export default function OwnerListCom() {
       </div>
 
       <div className="w-full flex flex-col items-center justify-center">
-         <div
-              className="md:w-full w-[90%] max-w-6xl overflow-x-auto md:overflow-x-hidden"
-              style={{ maxHeight: '400px', overflowY: 'auto' }}
-          >
+        <div
+          className="md:w-full w-[90%] max-w-6xl overflow-x-auto md:overflow-x-hidden"
+          style={{ maxHeight: '400px', overflowY: 'auto' }}
+        >
           <div className="min-w-175">
-          <DarkTableContainer>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>
-                    <div className="flex items-center gap-2">
-                      <Person fontSize="small" className="text-orange-200" />
-                      Full Name
-                    </div>
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    <div className="flex items-center justify-center gap-2">
-                      <Email fontSize="small" className="text-orange-200" />
-                      Email
-                    </div>
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    <div className="flex items-center justify-center gap-2">
-                      <Phone fontSize="small" className="text-orange-200" />
-                      Phone Number
-                    </div>
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    <div className="flex items-center justify-center gap-2">
-                      <Groups fontSize="small" className="text-orange-200" />
-                      Team
-                    </div>
-                  </StyledTableCell>
-                  <StyledTableCell align="center">Profile</StyledTableCell>
-                  <StyledTableCell align="center">Actions</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row, index) => (
-                  <StyledTableRow key={index} className="group">
-                    <StyledTableCell component="th" scope="row">
-                      <div className="flex items-center gap-3">
-                        <div>
-                          <div className="font-semibold text-white">{row.name}</div>
-                          <div className="text-sm text-gray-300">{row.first_name}</div>
+            <DarkTableContainer>
+              <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>
+                      <div className="flex items-center gap-2">
+                        <Person fontSize="small" className="text-orange-200" />
+                        Full Name
+                      </div>
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <div className="flex items-center justify-center gap-2">
+                        <Email fontSize="small" className="text-orange-200" />
+                        Email
+                      </div>
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <div className="flex items-center justify-center gap-2">
+                        <Phone fontSize="small" className="text-orange-200" />
+                        Phone Number
+                      </div>
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <div className="flex items-center justify-center gap-2">
+                        <Groups fontSize="small" className="text-orange-200" />
+                        Team
+                      </div>
+                    </StyledTableCell>
+                    <StyledTableCell align="center">Profile</StyledTableCell>
+                    <StyledTableCell align="center">Actions</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((row, index) => (
+                    <StyledTableRow key={index} className="group">
+                      <StyledTableCell component="th" scope="row">
+                        <div className="flex items-center gap-3">
+                          <div>
+                            <div className="font-semibold text-white">{row.name}</div>
+                            <div className="text-sm text-gray-300">{row.first_name}</div>
+                          </div>
                         </div>
-                      </div>
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      <span className="inline-block px-3 py-1 rounded-full bg-purple-900/30 text-purple-300 text-sm font-medium">
-                        {row.email}
-                      </span>
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      <div className="flex items-center justify-center gap-2 text-gray-300">
-                        <Phone fontSize="small" className="text-amber-300" />
-                        {row.phone_number}
-                      </div>
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      <span className={`px-3 py-1.5 rounded-lg text-sm font-medium bg-purple-900/40 text-purple-300`}>
-                        {row.team}
-                      </span>
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      <div className="flex justify-center">
-                        {
-                          row.profil_img ? (
-                            <div className='rounded-full w-10 h-10 transition-all hover:scale-110'>
-                              <a
-                                href={`${endpointFile}${row.profil_img}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <img
-                                  src={`${endpointFile}${row.profil_img}`}
-                                  alt={`${row.first_name} ${row.name}`}
-                                  className="w-full h-full object-cover rounded-full"
-                                />
-                              </a>
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <span className="inline-block px-3 py-1 rounded-full bg-purple-900/30 text-purple-300 text-sm font-medium">
+                          {row.email}
+                        </span>
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <div className="flex items-center justify-center gap-2 text-gray-300">
+                          <Phone fontSize="small" className="text-amber-300" />
+                          {row.phone_number}
+                        </div>
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <span className={`px-3 py-1.5 rounded-lg text-sm font-medium bg-purple-900/40 text-purple-300`}>
+                          {row.team}
+                        </span>
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <div className="flex justify-center">
+                          {
+                            row.profil_img ? (
+                              <div className='rounded-full w-10 h-10 transition-all hover:scale-110'>
+                                <a
+                                  href={row.profil_img}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <img
+                                    src={row.profil_img}
+                                    alt={`${row.first_name} ${row.name}`}
+                                    className="w-full h-full object-cover rounded-full"
+                                  />
+                                </a>
 
-                            </div>
-                          ) : (
-                            <>
-                              <Avatar
-                                sx={{
-                                  width: 36,
-                                  height: 36,
-                                  bgcolor: 'rgba(255, 140, 0, 0.1)',
-                                  border: '1px solid rgba(255, 140, 0, 0.3)',
-                                  color: '#ff8c00',
-                                  cursor: 'pointer',
-                                  transition: 'all 0.3s',
-                                  '&:hover': {
-                                    transform: 'scale(1.1)',
-                                    boxShadow: '0 0 20px rgba(255, 140, 0, 0.4)',
-                                  },
-                                }}
-                              >
-                                <AccountCircle />
-                              </Avatar>
-                            </>
-                          )
-                        }
+                              </div>
+                            ) : (
+                              <>
+                                <Avatar
+                                  sx={{
+                                    width: 36,
+                                    height: 36,
+                                    bgcolor: 'rgba(255, 140, 0, 0.1)',
+                                    border: '1px solid rgba(255, 140, 0, 0.3)',
+                                    color: '#ff8c00',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.3s',
+                                    '&:hover': {
+                                      transform: 'scale(1.1)',
+                                      boxShadow: '0 0 20px rgba(255, 140, 0, 0.4)',
+                                    },
+                                  }}
+                                >
+                                  <AccountCircle />
+                                </Avatar>
+                              </>
+                            )
+                          }
 
-                      </div>
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      <OwnerActions
-                        owner={row}
-                        onUpdate={handleUpdate}
-                        onRemove={handleRemove}
-                        loading={loadingId === row.id}
-                      />
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </DarkTableContainer>
+                        </div>
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <OwnerActions
+                          owner={row}
+                          onUpdate={handleUpdate}
+                          onRemove={handleRemove}
+                          loading={loadingId === row.id}
+                        />
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </DarkTableContainer>
           </div>
         </div>
       </div>

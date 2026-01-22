@@ -9,7 +9,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { endpointFile } from '../../utils/utils';
 
 interface TeamMember {
   id: number;
@@ -82,7 +81,7 @@ const TeamInfo: React.FC<TeamInfoProps> = ({
             <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-linear-to-br from-gray-800 to-gray-900 border-4 border-blue-600 overflow-hidden shadow-2xl shadow-blue-900/50">
               {teamLogo ? (
                 <img 
-                  src={ `${endpointFile}${teamLogo}` } 
+                  src={ teamLogo } 
                   alt={`${teamName} logo`}
                   className="w-full h-full object-cover"
                 />
@@ -104,7 +103,7 @@ const TeamInfo: React.FC<TeamInfoProps> = ({
             <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-linear-to-br from-gray-800 to-gray-900 border border-gray-700">
               {teamPhoto ? (
                 <img 
-                  src={`${endpointFile}${teamPhoto}`} 
+                  src={teamPhoto} 
                   alt={`${teamName} team photo`}
                   className="w-full h-64 md:h-80 object-cover"
                 />

@@ -19,7 +19,8 @@ import axios from 'axios';
 import type { itemTeam } from '../../utils/entity';
 import TeamActions from './team_action_component';
 import TeamActionsAvaibs from './team_actions_avaibs';
-import { endpoint, endpointFile } from '../../utils/utils';
+import { endpoint} from '../../utils/utils';
+import LoadingSpinner from '../LoadSpinner';
 
 const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
@@ -156,10 +157,8 @@ export default function TeamListComponent() {
         try {
             setLoading(true);
 
-            console.log('User role:', user?.role);
             if (user?.role == false) {
                 await fetchCanHandle();
-                console.log('nandalo tato')
             }
             const response = await axios.post(endpoint + 'teams/all/with-search', {
                 query: searchTerm || '',
@@ -169,19 +168,21 @@ export default function TeamListComponent() {
 
             const data_ = response.data;
 
-            const preRows = data_.map((item: any) =>
-                createData(
-                    item.id,
-                    item.name,
-                    item.logo,
-                    item.user.id,
-                    item.user.name + ' ' + item.user.first_name,
-                    item.is_male,
-                    item.players.length
-                )
-            );
-
-            setRows(preRows);
+            const preRows = data_
+                .filter((item: any) => !(user?.role === false && item.is_admin))
+                .map((item: any) =>
+                    createData(
+                        item.id,
+                        item.name,
+                        item.logo,
+                        item.user.id,
+                        `${item.user.name} ${item.user.first_name}`,
+                        item.is_male,
+                        item.players.length
+                    )
+                );
+            const filteredRows = [...preRows];
+            setRows(filteredRows);
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {
@@ -204,6 +205,13 @@ export default function TeamListComponent() {
         console.log('Chargement initial des données');
         fetchData(searchTerm, genderFilter);
     }, [searchTerm, genderFilter]);
+
+
+    if (load) {
+        return (
+            <LoadingSpinner text="Loading team list..." />
+        )
+    }
 
 
     return (
@@ -307,7 +315,7 @@ export default function TeamListComponent() {
                                     {rows.map((row, index) => (
                                         <StyledTableRow
                                             key={index}
-                                            className={`group ${id_user === row.id_owner+'' ? 'bg-linear-to-r from-amber-950/20 to-amber-950/10 border-l-4 border-l-amber-500' : ''}`}
+                                            className={`group ${id_user === row.id_owner + '' ? 'bg-linear-to-r from-amber-950/20 to-amber-950/10 border-l-4 border-l-amber-500' : ''}`}
                                         >
                                             <StyledTableCell component="th" scope="row">
                                                 <div className="flex">
@@ -316,12 +324,12 @@ export default function TeamListComponent() {
                                                             row.logo ? (
                                                                 <div className='rounded-full w-10 h-10 hover:scale(1.1)'>
                                                                     <a
-                                                                        href={`${endpointFile}${row.logo}`}
+                                                                        href={row.logo}
                                                                         target="_blank"
                                                                         rel="noopener noreferrer"
                                                                     >
                                                                         <img
-                                                                            src={`${endpointFile}${row.logo}`}
+                                                                            src={row.logo}
                                                                             alt={`${row.name}`}
                                                                             className="w-full h-full object-cover transition-all hover:scale-110 rounded-full"
                                                                         />
@@ -362,15 +370,15 @@ export default function TeamListComponent() {
                                                 {
                                                     row.is_male === true ? (
                                                         <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${user?.id === row.id_owner
-                                                                ? 'bg-amber-800/40 text-amber-200 border border-amber-700/50'
-                                                                : 'bg-amber-900/30 text-amber-300'
+                                                            ? 'bg-amber-800/40 text-amber-200 border border-amber-700/50'
+                                                            : 'bg-amber-900/30 text-amber-300'
                                                             }`}>
                                                             Male
                                                         </span>
                                                     ) : (
                                                         <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${user?.id === row.id_owner
-                                                                ? 'bg-pink-800/40 text-pink-200 border border-pink-700/50'
-                                                                : 'bg-pink-900/30 text-pink-300'
+                                                            ? 'bg-pink-800/40 text-pink-200 border border-pink-700/50'
+                                                            : 'bg-pink-900/30 text-pink-300'
                                                             }`}>
                                                             Female
                                                         </span>
@@ -379,8 +387,8 @@ export default function TeamListComponent() {
                                             </StyledTableCell>
                                             <StyledTableCell align="center">
                                                 <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${user?.id === row.id_owner
-                                                        ? 'bg-purple-800/40 text-purple-200 border border-purple-700/50'
-                                                        : 'bg-purple-900/30 text-purple-300'
+                                                    ? 'bg-purple-800/40 text-purple-200 border border-purple-700/50'
+                                                    : 'bg-purple-900/30 text-purple-300'
                                                     }`}>
                                                     {row.total_members}
                                                 </span>

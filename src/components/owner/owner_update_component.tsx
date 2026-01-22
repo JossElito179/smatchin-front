@@ -23,7 +23,7 @@ import {
 } from '@mui/icons-material';
 import { VscFileBinary } from 'react-icons/vsc';
 import axios from 'axios';
-import { endpoint, endpointFile } from '../../utils/utils';
+import { endpoint } from '../../utils/utils';
 
 
 
@@ -394,7 +394,7 @@ const OwnerUpdateComponent = ({ id_user }: string | any) => {
                                                                         profilImg
                                                                             ? URL.createObjectURL(profilImg)
                                                                             : existingProfil
-                                                                                ? `${endpointFile}${existingProfil}`
+                                                                                ? existingProfil
                                                                                 : '/placeholder.png'
                                                                     }
                                                                     alt="no file added"

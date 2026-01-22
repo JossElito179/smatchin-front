@@ -13,6 +13,7 @@ import {
     CardContent,
     Grid,
     IconButton,
+    Switch,
 } from '@mui/material';
 import {
     CloudUpload as CloudUploadIcon,
@@ -28,7 +29,7 @@ import {
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { endpoint, endpointFile } from '../../utils/utils';
+import { endpoint } from '../../utils/utils';
 
 
 const TeamUpdateComponent = ({ id }: string | any) => {
@@ -38,6 +39,7 @@ const TeamUpdateComponent = ({ id }: string | any) => {
     const [groupPhotoFile, setGroupPhotoFile] = useState<File | null>(null);
     const [existingLogo, setExistingLogo] = useState<string | null>(null);
     const [existingTeamImg, setExistingTeamImg] = useState<string | null>(null);
+    const [isAdmin, setIsAdmin] = useState(false);
     const [selectedOwner, setSelectedOwner] = useState('');
     const [teamName, setTeamName] = useState('');
     const [load, setLoading] = useState(true);
@@ -55,6 +57,8 @@ const TeamUpdateComponent = ({ id }: string | any) => {
 
             setTeamToUpdate(data);
             setTeamName(data.name);
+            setIsAdmin(data.is_admin);
+
             setSelectedOwner(String(data.id_users));
             setGender(data.is_male ? 'male' : 'female');
 
@@ -111,6 +115,7 @@ const TeamUpdateComponent = ({ id }: string | any) => {
                 formData.append('name', teamName);
                 formData.append('id_users', selectedOwner);
                 formData.append('is_male', gender === 'male' ? '1' : '0');
+                formData.append('is_admin', isAdmin ? '1' : '0');
 
                 if (logoFile) {
                     formData.append('logoImg', logoFile);
@@ -250,7 +255,7 @@ const TeamUpdateComponent = ({ id }: string | any) => {
                                                             logoFile
                                                                 ? URL.createObjectURL(logoFile)
                                                                 : existingLogo
-                                                                    ? `${endpointFile}${existingLogo}`
+                                                                    ? existingLogo
                                                                     : '/placeholder.png'
                                                         }
                                                         alt="no file added"
@@ -334,7 +339,7 @@ const TeamUpdateComponent = ({ id }: string | any) => {
                                                             groupPhotoFile
                                                                 ? URL.createObjectURL(groupPhotoFile)
                                                                 : existingTeamImg
-                                                                    ? `${endpointFile}${existingTeamImg}`
+                                                                    ? existingTeamImg
                                                                     : '/placeholder.png'
                                                         }
                                                         alt='no file added'
@@ -478,6 +483,26 @@ const TeamUpdateComponent = ({ id }: string | any) => {
 
 
                                             <Box>
+                                                <Stack direction="row" alignItems="center" spacing={1.5} mb={3}>
+                                                    <Box>
+                                                        <FormControlLabel
+                                                            control={
+                                                                <Switch
+                                                                    size="small"
+                                                                    checked={isAdmin}
+                                                                    onChange={(e) => setIsAdmin(e.target.checked)}
+                                                                    color="primary"
+                                                                />
+                                                            }
+                                                            label={
+                                                                <Typography variant="body2" sx={{ fontSize: '0.9rem' }}>
+                                                                    Is Admin
+                                                                </Typography>
+                                                            }
+                                                        />
+                                                    </Box>
+                                                </Stack>
+
                                                 <Typography variant="subtitle2" sx={{ color: '#666', fontWeight: 500 }}>
                                                     Gender
                                                 </Typography>
