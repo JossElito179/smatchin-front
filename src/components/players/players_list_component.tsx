@@ -103,6 +103,7 @@ export default function PlayersListComponent({ id, name }: { id: string | undefi
         const response = await axios.get(`${endpoint}users/find/${userId}`);
         const userData = response.data;
         setUser(userData);
+        console.log(user, canHandledResponse)
         return userData;
     } catch (error) {
         console.error('Error fetching data:', error);
