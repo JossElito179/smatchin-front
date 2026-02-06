@@ -97,8 +97,11 @@ const PlayerAddComponent = ({ id_teams, name }: { id_teams: string | undefined; 
                         'Content-Type': 'multipart/form-data',
                     },
                 });
-                alert('Player added successfully!');
-                console.log(response)
+                if (response.data.message) {
+                    alert(response.data.message)
+                }else{
+                    alert('Player added successfully !');
+                }
             } catch (error) {
                 console.error('Error adding team:', error);
                 alert('Failed to add players. Please try again.');

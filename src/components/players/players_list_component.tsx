@@ -98,79 +98,88 @@ export default function PlayersListComponent({ id, name }: { id: string | undefi
     const [canHandledResponse, setCanHandledResponse] = useState([]);
 
     async function fetchUserRole() {
-    try {
-        setLoading(true);
-        const response = await axios.get(`${endpoint}users/find/${userId}`);
-        const userData = response.data;
-        setUser(userData);
-        console.log(user, canHandledResponse)
-        return userData;
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        return null;
-    }
-}
-
-async function fetchCanHandle() {
-    try {
-        const response = await axios.post(
-            `${endpoint}teams/all/with-search/user-id`,
-            { id_user: userId }
-        );
-
-        const teams = response.data;
-        setCanHandledResponse(teams);
-
-        const canHandle = teams.some((element: any) => 
-            Number(element.id) === Number(id)
-        );
-
-        setCanHandle(canHandle);
-        localStorage.setItem('canHandle', canHandle.toString());
-        return canHandle;
-    } catch (error) {
-        console.error(error);
-        return false;
-    }
-}
-
-async function fetchData(searchTerm?: string) {
-    try {
-        setLoading(true);
-        const userData = await fetchUserRole();
-        
-        if (userData?.role === false) {
-            const canHandleResult = await fetchCanHandle();
-            setCanHandle(canHandleResult);
-        } else {
-            setCanHandle(true);
+        try {
+            console.log(userId)
+            const response = await axios.get(`${endpoint}users/find/${userId}`);
+            const userData = response.data;
+            setUser(userData);
+            console.log(user, canHandledResponse)
+            return userData;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            return null;
         }
-
-        const response = await axios.post(`${endpoint}players/searchPlayer`, {
-            searchTerm: searchTerm || '',
-            id_teams: id
-        });
-
-        const data_ = response.data;
-        const preRows = data_.map((item: any) =>
-            createData(
-                item.id_players,
-                item.name,
-                item.first_name,
-                item.age,
-                item.position.acronym,
-                item.profil_img,
-                item.birth_date
-            )
-        );
-
-        setRows(preRows);
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    } finally {
-        setLoading(false);
     }
-}
+
+    async function fetchCanHandle() {
+        try {
+            const response = await axios.post(
+                `${endpoint}teams/all/with-search/user-id`,
+                { id_user: userId }
+            );
+
+            const teams = response.data;
+            setCanHandledResponse(teams);
+
+            const canHandle = teams.some((element: any) =>
+                Number(element.id) === Number(id)
+            );
+
+            setCanHandle(canHandle);
+            localStorage.setItem('canHandle', canHandle.toString());
+            return canHandle;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
+
+    async function fetchData(searchTerm?: string) {
+        try {
+            setLoading(false)
+            if (!searchTerm) {
+                console.log('mandalo')
+                setLoading(true);
+            }
+
+            setCanHandle(false);
+            if (userId != null) {
+
+                const userData = await fetchUserRole();
+
+                if (userData?.role === false) {
+                    const canHandleResult = await fetchCanHandle();
+                    setCanHandle(canHandleResult);
+                } else {
+                    setCanHandle(true);
+                }
+            }
+
+            const response = await axios.post(`${endpoint}players/searchPlayer`, {
+                searchTerm: searchTerm || '',
+                id_teams: id
+            });
+
+            const data_ = response.data;
+            const preRows = data_.map((item: any) =>
+                createData(
+                    item.id_players,
+                    item.name,
+                    item.first_name,
+                    item.age,
+                    item.position.acronym,
+                    item.profil_img,
+                    item.birth_date
+                )
+            );
+
+            setRows(preRows);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     function handleAddplayer() {
         navigate(`/player/add/${id}/${name || 'team'}`);
@@ -180,10 +189,12 @@ async function fetchData(searchTerm?: string) {
         navigate(`/player/details/${id_player}`);
     }
 
+        useEffect(() => {
+            fetchData();
+    }, []);
 
     useEffect(() => {
         if (searchTerm !== undefined) {
-            console.log('Recherche avec terme:', searchTerm);
             fetchData(searchTerm);
         }
     }, [searchTerm]);

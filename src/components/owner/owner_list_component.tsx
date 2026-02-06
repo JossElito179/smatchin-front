@@ -138,7 +138,9 @@ export default function OwnerListCom() {
 
   async function fetchData(searchTerm?: string, isMaleVals = 'all') {
     try {
-      setLoading(true);
+      if (!searchTerm) {
+        setLoading(true);
+      }
       console.log(isMaleVals === 'all' ? null : isMaleVals === 'male' ? true : false)
       const response = await axios.post(endpoint + 'users/all/with-search', {
         query: searchTerm || '',

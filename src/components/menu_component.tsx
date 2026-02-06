@@ -18,7 +18,7 @@ export default function MenuComponent() {
     async function fetchUserRole() {
         try {
             setLoading(true);
-            const response = await axios.get(endpoint+'users/find/' + id_user);
+            const response = await axios.get(endpoint + 'users/find/' + id_user);
 
             const data_ = response.data;
             setUserData(data_);
@@ -31,7 +31,9 @@ export default function MenuComponent() {
     }
 
     useEffect(() => {
-        fetchUserRole();
+        if (id_user) {
+            fetchUserRole();
+        }
     }, []);
 
     let items = [
@@ -43,7 +45,7 @@ export default function MenuComponent() {
 
     const role = userData?.role;
 
-    if (role === false) {
+    if (role === false || id_user == null) {
         items = [
             { icon: <CiBasketball size={18} />, label: 'Team list', onClick: () => navigate('/teams') },
         ];

@@ -19,7 +19,7 @@ import axios from 'axios';
 import type { itemTeam } from '../../utils/entity';
 import TeamActions from './team_action_component';
 import TeamActionsAvaibs from './team_actions_avaibs';
-import { endpoint} from '../../utils/utils';
+import { endpoint } from '../../utils/utils';
 import LoadingSpinner from '../LoadSpinner';
 
 const StyledTableCell = styled(TableCell)(() => ({
@@ -155,8 +155,9 @@ export default function TeamListComponent() {
 
     async function fetchData(searchTerm?: string, isMaleVals = 'all') {
         try {
-            setLoading(true);
-
+            if (!searchTerm) {
+                setLoading(true);
+            }
             if (user?.role == false) {
                 await fetchCanHandle();
             }

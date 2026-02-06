@@ -6,7 +6,7 @@ import { VscFileBinary } from "react-icons/vsc";
 import {
     Edit as EditIcon,
 } from '@mui/icons-material';
-import { endpoint, endpointFile } from "../../utils/utils";
+import { endpoint } from "../../utils/utils";
 
 const PlayerUpdateComponent = ({ id_player }: string | any) => {
     const [player, setPlayer] = useState<any>(null);
@@ -375,7 +375,7 @@ const PlayerUpdateComponent = ({ id_player }: string | any) => {
                                                             profilFile
                                                                 ? URL.createObjectURL(profilFile)
                                                                 : existingProfil
-                                                                    ? `${endpointFile}${existingProfil}`
+                                                                    ? `${existingProfil}`
                                                                     : '/placeholder.png'
                                                         }
                                                         alt="no file added"
