@@ -21,6 +21,7 @@ import TeamActions from './team_action_component';
 import TeamActionsAvaibs from './team_actions_avaibs';
 import { endpoint } from '../../utils/utils';
 import LoadingSpinner from '../LoadSpinner';
+import { SearchIcon } from 'lucide-react';
 
 const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
@@ -217,8 +218,19 @@ export default function TeamListComponent() {
 
     return (
         <div>
-            <div className="search-container flex items-center w-full justify-center mb-5">
-                <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search owners/ teams..." className="search-input p-3 m-5 rounded bg-gray-800 border border-gray-700 w-1/3" />
+            <div className="search-container px-4 md:px-6 w-full flex justify-center mt-10 mb-10 md:mb-10">
+                <div className="relative w-full max-w-2xl">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <SearchIcon className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                        type="text"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder="Search teams/ owners..."
+                        className="search-input w-full pl-10 pr-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
+                    />
+                </div>
             </div>
             <div className="filter-container flex items-center justify-center -mt-9">
                 <FormControl>
