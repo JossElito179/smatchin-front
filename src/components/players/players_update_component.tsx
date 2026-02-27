@@ -515,7 +515,6 @@ const PlayerUpdateComponent = ({ id_player }: string | any) => {
                                                     <input
                                                         type="file"
                                                         hidden
-                                                        accept="image/*"
                                                         onChange={handleBaccUpload}
                                                     />
                                                 </Button>
@@ -619,7 +618,6 @@ const PlayerUpdateComponent = ({ id_player }: string | any) => {
                                                     <input
                                                         type="file"
                                                         hidden
-                                                        accept="image/*"
                                                         onChange={handleCinUpload}
                                                     />
                                                 </Button>
