@@ -128,7 +128,7 @@ export default function TeamListComponent() {
             setLoading(true);
             const response = await axios.get(endpoint + 'users/find/' + userId);
             setUser(response.data);
-
+            console.log(response.data, 'User---')
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {
@@ -159,32 +159,43 @@ export default function TeamListComponent() {
             if (!searchTerm) {
                 setLoading(true);
             }
-            if (user?.role == false) {
-                await fetchCanHandle();
-            }
-            const response = await axios.post(endpoint + 'teams/all/with-search', {
-                query: searchTerm || '',
-                is_male: isMaleVals === 'all' ? null : isMaleVals === 'male' ? true : false
 
+            const [canHandleResponse, teamsResponse] = await Promise.all([
+                user?.role === false ? fetchCanHandle() : Promise.resolve(null),
+                axios.post(endpoint + 'teams/all/with-search', {
+                    query: searchTerm?.trim() || '',
+                    is_male: isMaleVals === 'all' ? null : isMaleVals === 'male'
+                })
+            ]);
+
+            console.log(canHandleResponse)
+
+            const data = teamsResponse.data ?? [];
+
+            // Étape 1 : Filtrer selon les permissions
+            const filteredData = user?.isStaff
+                ? data
+                : data.filter((item: any) => !(user?.role === false && item.is_admin));
+
+            // Étape 2 : Transformer TOUS les items avec createData
+            const rows = filteredData.map((item: any) => {
+                const fullName = `${item.user.name} ${item.user.first_name}`.trim();
+                const playerCount = item.players?.length ?? 0;
+
+                return createData(
+                    item.id,
+                    item.name,
+                    item.logo,
+                    item.user.id,
+                    fullName,
+                    item.is_male,
+                    playerCount
+                );
             });
 
-            const data_ = response.data;
+            console.log('Rows after transformation:', rows);
+            setRows(rows);
 
-            const preRows = data_
-                .filter((item: any) => !(user?.role === false && item.is_admin))
-                .map((item: any) =>
-                    createData(
-                        item.id,
-                        item.name,
-                        item.logo,
-                        item.user.id,
-                        `${item.user.name} ${item.user.first_name}`,
-                        item.is_male,
-                        item.players.length
-                    )
-                );
-            const filteredRows = [...preRows];
-            setRows(filteredRows);
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {
