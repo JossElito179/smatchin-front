@@ -399,7 +399,7 @@ export default function PlayersListComponent({ id, name }: { id: string | undefi
                     </div>
                 </div>
                 {
-                    canHandle == true ? (
+                    (user?.canModify == true || user?.isStaff == true )  && canHandle == true ? (
                         <>
                             <div className="mt-4 p-3 mb-7 flex justify-around">
                                 <button onClick={handleAddplayer} className="px-4 py-2 mr-1.5 bg-purple-900 hover:bg-purple-700 text-white rounded-md">

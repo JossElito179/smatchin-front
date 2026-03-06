@@ -259,7 +259,7 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
                   </button>
                 </div>
               </>
-            ) : canRealHandle === 'true' ? (
+            ) : canRealHandle === 'true' && (user?.canModify == true || user?.isStaff == true ) ? (
               <>          <div className="flex items-center gap-3">
                 <button
                   onClick={onEdit}
