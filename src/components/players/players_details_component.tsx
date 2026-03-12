@@ -259,24 +259,28 @@ const PlayerDetailsComponent: React.FC<PlayerDetailsProps> = ({
                   </button>
                 </div>
               </>
-            ) : canRealHandle === 'true' && (user?.canModify == true || user?.isStaff == true ) ? (
-              <>          <div className="flex items-center gap-3">
-                <button
-                  onClick={onEdit}
-                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
-                >
-                  <Edit size={18} />
-                  Edit
-                </button>
-                <button
-                  onClick={deleteItem}
-                  className="flex items-center gap-2 px-4 py-2 bg-red-600/20 hover:bg-red-700/30 text-red-400 border border-red-600/30 rounded-lg transition-colors"
-                >
-                  <Trash2 size={18} />
-                  Delete
-                </button>
-              </div></>
-            ) : (
+            ) : 
+            
+            // canRealHandle === 'true' && (user?.canModify == true || user?.isStaff == true ) ? (
+            //   <>          <div className="flex items-center gap-3">
+            //     <button
+            //       onClick={onEdit}
+            //       className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+            //     >
+            //       <Edit size={18} />
+            //       Edit
+            //     </button>
+            //     <button
+            //       onClick={deleteItem}
+            //       className="flex items-center gap-2 px-4 py-2 bg-red-600/20 hover:bg-red-700/30 text-red-400 border border-red-600/30 rounded-lg transition-colors"
+            //     >
+            //       <Trash2 size={18} />
+            //       Delete
+            //     </button>
+            //   </div></>
+            // ) : 
+            
+            (
               <></>
             )
           }

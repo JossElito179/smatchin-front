@@ -100,7 +100,7 @@ export default function PlayersListComponent({ id, name }: { id: string | undefi
 
     async function fetchUserRole() {
         try {
-            console.log(userId)
+            console.log(userId, canHandle)
             const response = await axios.get(`${endpoint}users/find/${userId}`);
             const userData = response.data;
             setUser(userData);
@@ -399,19 +399,20 @@ export default function PlayersListComponent({ id, name }: { id: string | undefi
                     </div>
                 </div>
                 {
-                    (user?.canModify == true || user?.isStaff == true) && canHandle == true ? (
-                        <>
-                            <div className="mt-4 p-3 mb-7 flex justify-around">
-                                <button onClick={handleAddplayer} className="px-4 py-2 mr-1.5 bg-purple-900 hover:bg-purple-700 text-white rounded-md">
-                                    Add Player
-                                </button>
-                                <button onClick={exportPlayerWithImages} className="px-4 py-2 ml-1.5 bg-orange-900 hover:bg-orange-700 text-white rounded-md">
-                                    Export Player
-                                </button>
-                            </div>
-                        </>
+                    // (user?.canModify == true || user?.isStaff == true) && canHandle == true ? (
+                    //     <>
+                    //         <div className="mt-4 p-3 mb-7 flex justify-around">
+                    //             <button onClick={handleAddplayer} className="px-4 py-2 mr-1.5 bg-purple-900 hover:bg-purple-700 text-white rounded-md">
+                    //                 Add Player
+                    //             </button>
+                    //             <button onClick={exportPlayerWithImages} className="px-4 py-2 ml-1.5 bg-orange-900 hover:bg-orange-700 text-white rounded-md">
+                    //                 Export Player
+                    //             </button>
+                    //         </div>
+                    //     </>
 
-                    ) : user?.role == true ? (
+                    // ) : 
+                    user?.role == true ? (
                         <>
                             <div className="mt-4 p-3 mb-7 flex justify-around">
                                 <button onClick={handleAddplayer} className="px-4 py-2 mr-1.5 bg-purple-900 hover:bg-purple-700 text-white rounded-md">
@@ -423,6 +424,7 @@ export default function PlayersListComponent({ id, name }: { id: string | undefi
                             </div>
                         </>
                     ) : (
+                        
                         <></>
                     )
                 }
