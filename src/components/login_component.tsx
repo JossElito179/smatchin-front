@@ -142,7 +142,7 @@ export default function LoginComponent() {
   
   <div className="h1-container mb-8 md:mb-0 md:ml-12 text-center md:text-left">
     <h1 className="font-light text-white text-4xl md:text-6xl lg:text-8xl">
-      Welcome to <br /> Smatch'in admin
+      Welcome to <br /> Smatchin admin
     </h1>
   </div>
 </div>
