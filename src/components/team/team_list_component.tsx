@@ -437,16 +437,16 @@ export default function TeamListComponent() {
                                                             onRemove={handleRemove}
                                                             loading={loadingId === row.id}
                                                         />
-                                                    // ) : user?.role == false && (user?.isStaff == true || user?.canModify == true) && Array.isArray(canHandledResponse) &&
-                                                    //     canHandledResponse.some((p: any) => p.id === row.id) ? (
-                                                    //     <TeamActions
-                                                    //         team={row}
-                                                    //         onViewDetails={handleViewDetails}
-                                                    //         onViewPlayers={handleViewPlayers}
-                                                    //         onUpdate={handleUpdate}
-                                                    //         onRemove={handleRemove}
-                                                    //         loading={loadingId === row.id}
-                                                    //     />
+                                                    ) : user?.role == false && (user?.isStaff == true || user?.canModify == true) && Array.isArray(canHandledResponse) &&
+                                                        canHandledResponse.some((p: any) => p.id === row.id) ? (
+                                                        <TeamActions
+                                                            team={row}
+                                                            onViewDetails={handleViewDetails}
+                                                            onViewPlayers={handleViewPlayers}
+                                                            onUpdate={handleUpdate}
+                                                            onRemove={handleRemove}
+                                                            loading={loadingId === row.id}
+                                                        />
                                                     ) : (
                                                         <TeamActionsAvaibs
                                                             team={row}
